@@ -10,10 +10,16 @@ class BaffleText extends React.Component {
 
   componentDidMount() {
     const { text, duration, delay } = this.props;
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       const b = baffle(this.textElement.current).start();
       b.text(() => text).reveal(duration);
     }, delay);
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 
   render() {
